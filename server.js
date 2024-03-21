@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const dbURI =
-  "mongodb+srv://crapeter:MongoDB0422%21@cluster0.pb7fxj4.mongodb.net/Students?retryWrites=true&w=majority";
+  "mongodb+srv://username:password@cluster0.pb7fxj4.mongodb.net/Students?retryWrites=true&w=majority";
 mongoose
   .connect(dbURI)
   .then(() => app.listen(3001))
