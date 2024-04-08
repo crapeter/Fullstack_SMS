@@ -35,7 +35,6 @@
       async sendStudentData() {
         const response = await axios.get(`http://localhost:3000/student-exists?studentID=${this.studentID}`)
         this.isStudentIDUnique = response.data.exists
-        console.log(this.isStudentIDUnique)
         if (!this.isStudentIDUnique) {
           try {
             await axios.post("http://localhost:3000/send-student", {
