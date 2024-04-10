@@ -29,6 +29,7 @@ async function startServer() {
     await mongoose
       .connect(dbURI)
       .then(() => app.listen(3001))
+      .then(() => console.log("DB connected"))
       .catch((err) => console.error(err));
   } catch (err) {}
 }
