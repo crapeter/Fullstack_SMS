@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 const app = express();
 const port = 3000;
@@ -8,12 +9,31 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-const dbURI =
-  "mongodb+srv://username:password@cluster0.pb7fxj4.mongodb.net/Students?retryWrites=true&w=majority";
-mongoose
-  .connect(dbURI)
-  .then(() => app.listen(3001))
-  .catch((err) => console.error(err));
+async function loginInfo() {
+  return new Promise((resolve, reject) => {
+    fs.readFile("info.txt", "utf8", (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const [username, password] = data.trim().split("\n");
+      resolve([username, password]);
+    });
+  });
+}
+
+async function startServer() {
+  try {
+    const [username, password] = await loginInfo();
+    const dbURI = `mongodb+srv://${username}:${password}@cluster0.pb7fxj4.mongodb.net/Students?retryWrites=true&w=majority`;
+    await mongoose
+      .connect(dbURI)
+      .then(() => app.listen(3001))
+      .catch((err) => console.error(err));
+  } catch (err) {}
+}
+
+startServer();
 
 const studentSchema = new mongoose.Schema({
   Name: {
