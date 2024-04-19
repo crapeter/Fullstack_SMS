@@ -31,7 +31,7 @@ async function startServer() {
       .then(() => app.listen(3001))
       .then(() => console.log("DB connected"))
       .catch((err) => console.error(err));
-  } catch (err) {}
+  } catch (err) { }
 }
 
 startServer();
